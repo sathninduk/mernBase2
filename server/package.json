@@ -1,0 +1,18 @@
+{
+  "name": "mernBase",
+  "version": "1.0.0",
+  "description": "The official MERN base of the Coduza-Bases project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "",
+  "dependencies": {
+    "graphql-playground-html": "^1.6.29",
+    "graphql-yoga": "^1.18.3",
+    "mongoose": "^6.0.5",
+    "nodemon": "^2.0.12"
+  }
+}
