@@ -1,17 +1,20 @@
 {
-  "name": "mernBase",
+  "name": "mernbase",
   "version": "1.0.0",
-  "description": "The official MERN base of the Coduza-Bases project",
+  "description": "The official MERN base (Axios) of the Coduza-Bases project",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon npm start"
   },
-  "keywords": [],
-  "author": "",
-  "license": "",
+  "keywords": [
+    "mern",
+    "axios"
+  ],
+  "author": "Coduza",
+  "license": "ISC",
   "dependencies": {
-    "graphql-playground-html": "^1.6.29",
-    "graphql-yoga": "^1.18.3",
+    "express": "^4.17.1",
     "mongoose": "^6.0.5",
     "nodemon": "^2.0.12"
   }

@@ -1,59 +1,23 @@
-const {GraphQLServer} = require('graphql-yoga');
-const mongoose = require("mongoose");
+const express = require('express')
+const app = express()
 
-mongoose.connect('mongodb+srv://coduza:xsi0xKjtMEs3O19Q@cluster0.gm6os.mongodb.net/mernbase?retryWrites=true&w=majority', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    //useFindAndModify: false,
-    //useCreateIndex: true
+// database
+const db = require('./database')
+
+// routers
+let index = require('./routes/index')
+
+// app uses
+app.use('/', index);
+
+
+app.get('*', function(req, res, next){
+    res.locals.user = req.user || null;
+    next();
 });
 
-const Todo = mongoose.model('Todo', {
-    text: String,
-    complete: Boolean
-});
+app.get('/', function (req, res) {
+    res.send('API Running')
+})
 
-const typeDefs = `
-  type Query {
-    hello(name: String): String!
-    todos: [Todo]
-  }
-  type Todo {
-    id: ID!
-    text: String!
-    complete: Boolean!
-  }
-  type Mutation {
-    createTodo(text: String!): Todo
-    updateTodo(id: ID!, complete: Boolean!): Boolean
-    removeTodo(id: ID!): Boolean
-  }
-`;
-
-const resolvers = {
-    Query: {
-        hello: (_, {name}) => `Hello ${name || 'World'}`,
-        todos: () => Todo.find()
-    },
-    Mutation: {
-        createTodo: async (_, {text}) => {
-            const todo = new Todo({ text, complete: true });
-            await todo.save();
-            return todo;
-        },
-        updateTodo: async (_, {id, complete}) => {
-            await Todo.findByIdAndUpdate(id, {complete});
-            return true;
-        },
-        removeTodo: async (_, { id }) => {
-            await Todo.findByIdAndRemove(id);
-            return true;
-        }
-    }
-};
-
-const server = new GraphQLServer({typeDefs, resolvers})
-mongoose.connection.once("open", function () {
-    console.log('Successfully connected to the cloud database')
-    server.start(() => console.log('Server is running on localhost:4000'))
-});
+app.listen(4000)
